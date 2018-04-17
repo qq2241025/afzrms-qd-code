@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Connections>
+	<!-- type 0:TCP 1：UDP 2:HTTP POST -->
+	<connection type="0" port="9001">
+		<parsePoolNum>10</parsePoolNum><!-- 发送线程池数量 -->
+		<dbPoolNum>20</dbPoolNum><!-- 接收线程池数量 -->
+		<readDataPoolNum>20</readDataPoolNum><!-- 读数据线程个数 -->
+
+		<Terminal id="GP-PND-GPRS">
+			<Terminal-name>GP-PND-GPRS</Terminal-name>
+			<Parse-class>
+				com.mapabc.gater.directl.parse.ParsePND
+			</Parse-class>
+			<Encode-class>
+				com.mapabc.gater.directl.encode.doog.GAODEFactory
+			</Encode-class>
+			<Hex-Start>24575a54524551</Hex-Start>
+			<Hex-End></Hex-End>
+			<IsSaveDb>true</IsSaveDb>
+			<IsSendJms>true</IsSendJms>
+			<IsEncrypt></IsEncrypt>
+			<IsDeflection></IsDeflection>
+			<IsRouteCorrect></IsRouteCorrect>
+			<IsConvertEncrypt></IsConvertEncrypt>
+			<IsLocationDesc></IsLocationDesc>
+			<LbmpImpl-Class>
+				<!-- com.mapabc.gater.lbmp.service.impl.MapabcCoordServiceImpl -->
+			</LbmpImpl-Class>
+			<JmsTopicName>topicName</JmsTopicName>
+			<JmsImpl-Class>
+				com.mapabc.gater.jms.service.impl.JmsTransmitServiceImpl
+			</JmsImpl-Class>
+			<coordType>0</coordType>
+			<mtType>1</mtType>
+			<mtUrl></mtUrl>
+			<!-- 允许tcp链路在不活动情况下保持时间 -->
+			<allowTcpKeepTime>60</allowTcpKeepTime>
+			<!-- 允许udp链路在不活动情况下保持时间 -->
+			<allowUdpKeepTime>60</allowUdpKeepTime>
+		</Terminal>
+	</connection>
+	<connection type="1" port="9002">
+		<parsePoolNum>20</parsePoolNum>
+		<dbPoolNum>20</dbPoolNum>
+		<readDataPoolNum>20</readDataPoolNum>
+	</connection>
+</Connections>

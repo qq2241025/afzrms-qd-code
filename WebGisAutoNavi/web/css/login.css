@@ -1,0 +1,17 @@
+html, body,form,table{font-size: 12px;padding: 0px;background:url("../images/login/bg.gif");overflow:hidden;}
+#loginForm{width: 100%;height: 100%;background:#E1F3CD;}
+.loginFrame {width: 862px;border-collapse: collapse;}
+.loginFrame td{border-collapse: collapse;}
+.loginFrame .headbg {background:url(../images/login/login_04.gif);background-repeat: no-repeat;height: 181px;width: 862px;}
+.loginFrame .leftTable {background:url(../images/login/leftTable.gif) repeat-y;width: 415px;}
+.loginFrame .lefImage {background:url(../images/login/leftImage.gif);background-repeat: no-repeat;width: 126px;height: 140px;margin-left: 230px; }
+.loginFrame .centerTable {background:#e1f3cd;width: 206px;}
+.loginFrame .rightTable {background:url(../images/login/rightTable.gif) repeat-y;width: 248px;}
+.loginFrame .buttomTable {background:url(../images/login/login_09.gif);background-repeat: no-repeat;height: 159px;width: 862px}
+#loginformDiv{background:#E1F3CD;margin:20px 4px 10px 4px;}
+#loginTable {border-collapse: collapse;background:#E1F3CD;}
+#loginTable td{height: 27px;border-collapse: collapse;}
+#loginTable  tbody input{border:solid 1px #cadcb2;width: 110px;height: 20px;margin-left: 2px;}
+#loginTable  tbody select{margin-left: 2px;height: 20px;}
+#loginTable  tfoot td{height:32px;} 
+#loginTable  tfoot input{border:solid 1px #cadcb2;height: 23px;} 

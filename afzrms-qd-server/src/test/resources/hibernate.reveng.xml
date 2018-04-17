@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+		<sql-type jdbc-type="NUMERIC" hibernate-type="java.lang.Long" />
+		<sql-type jdbc-type="DECIMAL" hibernate-type="java.lang.Long" />
+		<!-- <sql-type jdbc-type="FLOAT" hibernate-type="java.lang.Double" /> -->
+		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" />
+		<sql-type jdbc-type="VARCHAR" hibernate-type="java.lang.String" />
+		<sql-type jdbc-type="CHAR" hibernate-type="java.lang.String" />
+	</type-mapping>
+	<!-- <table-filter match-name="REF_ROLE_MODULE" /> -->
+	<!-- <table-filter match-name="REF_USER_ROLE" /> -->
+	<!-- <table-filter match-name="REF_USER_TERMINAL" /> -->
+	<!-- <table-filter match-name="REF_VEHICLE_GROUP" /> -->
+	<!-- <table-filter match-name="T_ALARM_AREA" /> -->
+	<!-- <table-filter match-name="T_DEPT" /> -->
+	<!-- <table-filter match-name="T_LOCRECORD" /> -->
+	<!-- <table-filter match-name="T_MODULE" /> -->
+	<!-- <table-filter match-name="T_PROTOCAL_TYPE" /> -->
+	<!-- <table-filter match-name="T_ROLE" /> -->
+	<!-- <table-filter match-name="T_TERMINAL" /> -->
+	<!-- <table-filter match-name="T_TERMINAL_ALARMSET" /> -->
+	<!-- <table-filter match-name="T_ALARMRULE_AREA" /> -->
+	<!-- <table-filter match-name="REF_TERMINAL_ALARMRULE_AREA" /> -->
+	<!-- <table-filter match-name="REF_ALARMRULE_AREA_ALARMAREA" /> -->
+	<!-- <table-filter match-name="T_TERMINAL_LOC" /> -->
+	<!-- <table-filter match-name="T_USER" /> -->
+	<!-- <table-filter match-name="T_VEHICLE_GROUP" /> -->
+	<!-- <table-filter match-name="T_VEHICLE_TYPE" /> -->
+	<!-- <table-filter match-name="T_TERM_INSTRUCTION_RECORD" /> -->
+<!-- 	<table-filter match-name="T_TJ_TERM_ALARM" /> -->
+<!-- 	<table-filter match-name="T_TJ_DEPT_ALARM" /> -->
+<!-- 	<table-filter match-name="T_TJ_TERM_OPERATION" /> -->
+<!-- 	<table-filter match-name="T_TJ_TERM_ONOFFLINE" /> -->
+
+	<table name="REF_ROLE_MODULE" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="REF_USER_ROLE" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="REF_USER_TERMINAL" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="REF_VEHICLE_GROUP" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_ALARM_AREA" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_ALARMRULE_AREA" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="REF_TERMINAL_ALARMRULE_AREA" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="REF_ALARMRULE_AREA_ALARMAREA" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_DEPT" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_LOCRECORD" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_MODULE" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_ROLE" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_USER" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_VEHICLE_GROUP" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+	<table name="T_VEHICLE_TYPE" catalog="qdafz">
+		<primary-key>
+			<generator class="identity"></generator>
+			<key-column name="id" />
+		</primary-key>
+	</table>
+</hibernate-reverse-engineering>

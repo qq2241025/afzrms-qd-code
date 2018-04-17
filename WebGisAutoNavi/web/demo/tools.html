@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Measure example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="../css/ol.css"  type="text/css" rel="stylesheet" />
+	<link href="../css/ol3-popup.css"  type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../lib/openlayers/ol-debug.js"></script>
+
+<style>
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+.tooltip-measure:before,
+.tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+</style>
+</head>
+<body>
+<div class="row-fluid">
+  <div class="span12">
+    <div id="map" class="map"></div>
+  </div>
+</div>
+<script>
+
+ol.DrawEventType.DRAWING = "drawing";
+ol.DrawEventType.DRAWMOVING = "moving";
+
+ol.interaction.Draw.prototype.addToDrawing_ = function(event) {
+  var coordinate = event.coordinate;
+  var geometry = this.sketchFeature_.getGeometry();
+  var coordinates;
+  if (this.mode_ === ol.interaction.DrawMode.LINE_STRING) {
+    this.finishCoordinate_ = coordinate.slice();
+    goog.asserts.assertInstanceof(geometry, ol.geom.LineString);
+    coordinates = geometry.getCoordinates();
+    coordinates.push(coordinate.slice());
+    geometry.setCoordinates(coordinates);
+  } else if (this.mode_ === ol.interaction.DrawMode.POLYGON) {
+    this.sketchPolygonCoords_[0].push(coordinate.slice());
+    goog.asserts.assertInstanceof(geometry, ol.geom.Polygon);
+    geometry.setCoordinates(this.sketchPolygonCoords_);
+  }
+  this.updateSketchFeatures_();
+  this.dispatchEvent(new ol.DrawEvent(ol.DrawEventType.DRAWING,this.sketchFeature_));
+};
+ol.interaction.Draw.prototype.handlePointerMove_ = function(event) {
+	  if (this.mode_ === ol.interaction.DrawMode.POINT &&
+	      goog.isNull(this.finishCoordinate_)) {
+	    this.startDrawing_(event);
+	  } else if (!goog.isNull(this.finishCoordinate_)) {
+	    this.modifyDrawing_(event);
+	  } else {
+	    this.createOrUpdateSketchPoint_(event);
+	    this.dispatchEvent(new ol.DrawEvent(ol.DrawEventType.DRAWMOVING,event));
+	  }
+	  return true;
+	};
+
+var source = new ol.source.Vector();
+
+var vector = new ol.layer.Vector({
+  source: source,
+  style: new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#ffcc33',
+      width: 2
+    }),
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({
+        color: '#ffcc33'
+      })
+    })
+  })
+});
+
+var lnglat = [120.37680781073895, 36.26544625760539];
+var point = ol.proj.transform(lnglat, 'EPSG:4326', 'EPSG:3857');
+var layer = new ol.layer.Tile({
+       source: new ol.source.XYZ({
+        	attributions: [new ol.Attribution({html: '君图科技'})],
+        	url: "http://webst01.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}"
+      }),
+      min : 4
+ });
+
+var source = new ol.source.Vector();
+var measureTooltip;
+
+var pointerMoveHandler = function(evt) {
+ 	var tooltipCoord = evt.coordinate;
+    var geom = evt.feature.getGeometry();
+    if(geom instanceof ol.geom.LineString) {
+      var output = formatLength(geom.getLength());
+      tooltipCoord = geom.getLastCoordinate();
+      measureTooltip.getElement().innerHTML = output;
+	  measureTooltip.setPosition(tooltipCoord);
+    }
+};
+
+
+var map = new ol.Map({
+  layers: [layer,vector],
+  target: 'map',
+  view: new ol.View({
+     center: point,
+     zoom  : 15,
+     minZoom : 4,
+     maxZoom : 19
+  })
+});
+
+var typeSelect = document.getElementById('type');
+
+var draw; 
+function addInteraction() {
+  var type = "LineString";
+  draw = new ol.interaction.Draw({
+    source: source,
+    type: type
+  });
+  map.addInteraction(draw);
+
+
+  createHelpTooltip();
+  
+
+  
+  draw.on('drawstart',function(evt) {
+	  var tooltipCoord = evt.coordinate;
+	  measureTooltip.setPosition(tooltipCoord);
+  });
+
+  draw.on('drawing',function(evt) {
+	  pointerMoveHandler(evt);
+  });
+  
+  draw.on('drawend',function(evt) {
+	  	measureTooltip.getElement().className = 'tooltip tooltip-static';
+	  	measureTooltip.setOffset([0, -7]);
+  });
+}
+
+
+/**
+ * Creates a new help tooltip
+ */
+function createHelpTooltip() {
+  var helpTooltipElement = document.getElementById("openlayer_tools_mouse");
+  if(helpTooltipElement==null){
+	  helpTooltipElement = document.createElement('div');
+	  helpTooltipElement.className = 'tooltip';
+	  helpTooltipElement.id = "openlayer_tools_mouse";
+  }
+  measureTooltip  = new ol.Overlay({
+    element: helpTooltipElement,
+    offset: [0, -15],
+    positioning: 'bottom-center'
+  });
+  map.addOverlay(measureTooltip);
+}
+
+
+
+
+/**
+ * Let user change the geometry type.
+ * @param {Event} e Change event.
+ */
+
+ // map.removeInteraction(draw);
+ // addInteraction();
+
+
+
+/**
+ * format length output
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ */
+var formatLength = function(length) {
+  if (length > 100) {
+    output = (Math.round(length / 1000 * 100) / 100) + 'km';
+  } else {
+    output = (Math.round(length * 100) / 100) +'m';
+  }
+  return output;
+};
+
+addInteraction();
+
+</script>
+</body>
+</html>

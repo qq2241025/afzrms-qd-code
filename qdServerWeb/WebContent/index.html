@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>青岛国际机场飞行区资源管理系统</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link href="lib/resources/css/ext-all.css"  type="text/css" rel="Stylesheet" />
+<script type="text/javascript" src="lib/ext-base.js"></script>
+<script type="text/javascript" src="lib/ext-all.js"></script>
+<script type="text/javascript" src="js/GAS.js"></script>
+<script type="text/javascript" src="lib/uxlib/BaseEncode64.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/login/login2.js"></script>
+<style>
+body{ margin:0px; padding:0px; background-image:url(images/bg.jpg); background-size:100%; background-position:50% 100%; background-repeat:no-repeat; background-attachment:fixed;}
+.login_main{ width:432px; height:291px; background-image:url(images/bg01.png); background-repeat:no-repeat; margin:0 auto; margin-top:150px; padding-top:1px;}
+.login_main table{ margin:0 auto; margin-top:76px;font-size: 12px;}
+.login_main table tr td{ height:20px;}
+.login_main table input{ height:18px; border:1px #999 solid; background:#FFF; vertical-align:middle;}
+.login_main table img{ vertical-align:middle;}
+.login_main .login_btn{ width:88px; height:38px; background:none; border:0px; cursor:pointer;}
+</style>
+</head>
+
+<body>
+    <div class="login_main">
+    	<form method="post" action="aa/login?_dc=1432693521133">
+        <table cellspacing="10">
+        	<tr><td valign="middle">用户名： <input id="username" class="" type="text" name="userName" autocomplete="off" size="20" style="width: 140px;"/></td></tr>
+        	<tr><td valign="middle">密　码： <input id="userpass" class="" type="password" name="userPass" autocomplete="off" size="20" style="width: 140px;"/></td></tr>
+        	<tr>
+            	<td valign="middle">验证码： <input id="userpassVercode" class="" type="text" name="rand" autocomplete="off" size="20" style="width: 75px;">
+                    <img id="vercode"  style=" width: 60px; height: 20px;cursor: pointer;" />
+					<input id="verfyCodeSeed" type="hidden" name="verfyCodeSeed" autocomplete="off" size="20" value="1234"/></td></tr>
+        	<tr>
+            	<td width="100%">
+            		<button id="loginBtn" class="login_btn" type="button" style="margin-left:10px;margin-top:30px;" >　</button>
+                    <button id="resetForm" class="login_btn" type="reset" style="margin-left:29px;margin-top:30px;">　</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

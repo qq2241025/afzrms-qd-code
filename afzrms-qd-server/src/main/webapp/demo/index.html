@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Measure example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="../css/ol.css"  type="text/css" rel="stylesheet" />
+	<link href="../css/ol3-popup.css"  type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../lib/openlayers/ol-debug.js"></script>
+	<script type="text/javascript" src="../lib/openlayers/ol3-popup.js"></script>
+    <script type="text/javascript" src="../js/GAS.js"></script>
+	<script type="text/javascript" src="../lib/openlayers/ol-tools.js"></script>
+<style>
+.ol-map-tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ol-map-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ol-map-tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+.ol-map-tooltip-measure:before,
+.ol-map-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.ol-map-tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+</style>
+</head>
+<body>
+<button onclick="tools()" value="测距">测距</button>
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span12">
+    <div id="map" class="map"></div>
+  </div>
+</div>
+<form class="form-inline">
+  <label>Geometry type &nbsp;</label>
+    <select id="type">
+      <option value="length">Length</option>
+      <option value="area">Area</option>
+    </select>
+    <label class="checkbox"><input type="checkbox" id="geodesic"/>use geodesic measures</label>
+</form>
+</div>
+<script type="text/javascript">
+var map= null,source = null;
+window.onload = function(){
+	var lnglat = [120.37680781073895, 36.26544625760539];
+	var point = ol.proj.transform(lnglat, 'EPSG:4326', 'EPSG:3857');
+	map = new ol.Map({
+		  layers: [],
+		  target: 'map',
+		  view: new ol.View({
+		    center: point,
+		    zoom: 15
+		  })
+	});
+}
+
+function tools(){
+	GAS.RuleTool(map);
+}
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

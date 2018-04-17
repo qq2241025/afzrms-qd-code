@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/task        
+	http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+	default-autowire="byName">
+	<!-- 完成Bean创建和自动依赖注入的功能 -->
+	<context:component-scan base-package="com.dt.afzrms">
+	</context:component-scan>
+
+	<!-- 配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:c3p0.properties</value>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置线程池 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${taskExecutor.corePoolSize}" />
+		<property name="maxPoolSize" value="${taskExecutor.maxPoolSize}" />
+		<property name="queueCapacity" value="${taskExecutor.queueCapacity}" />
+	</bean>
+	
+	<task:annotation-driven />
+	
+	<!-- 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" lazy-init="default" autowire="default"
+		dependency-check="default">
+		<property name="driverClass" value="${datasource.c3p0.driverClass}">
+		</property>
+		<property name="jdbcUrl" value="${datasource.c3p0.jdbcUrl}"></property>
+		<property name="user" value="${datasource.c3p0.user}"></property>
+		<property name="password" value="${datasource.c3p0.password}"></property>
+		<property name="minPoolSize" value="${datasource.c3p0.minPoolSize}">
+		</property>
+		<property name="maxPoolSize" value="${datasource.c3p0.maxPoolSize}">
+		</property>
+		<property name="initialPoolSize" value="${datasource.c3p0.initialPoolSize}">
+		</property>
+		<property name="maxIdleTime" value="${datasource.c3p0.maxIdleTime}">
+		</property>
+		<property name="acquireIncrement" value="${datasource.c3p0.acquireIncrement}">
+		</property>
+		<property name="maxStatements" value="${datasource.c3p0.maxStatements}">
+		</property>
+		<property name="idleConnectionTestPeriod" value="${datasource.c3p0.idleConnectionTestPeriod}">
+		</property>
+		<property name="acquireRetryAttempts" value="${datasource.c3p0.acquireRetryAttempts}">
+		</property>
+		<property name="breakAfterAcquireFailure" value="${datasource.c3p0.breakAfterAcquireFailure}">
+		</property>
+		<property name="testConnectionOnCheckout" value="${datasource.c3p0.testConnectionOnCheckout}">
+		</property>
+		<property name="checkoutTimeout" value="${datasource.c3p0.checkoutTimeout}">
+		</property>
+	</bean>
+	<!-- spring Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="com.dt.afzrms.po" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 事务代理拦截器的配置 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="set*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="edit*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="remove*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="batch*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 事务执行策略 -->
+	<aop:config>
+		<aop:pointcut id="allManagerMethod"
+			expression="execution(* com.dt.afzrms.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
+	</aop:config>
+</beans>

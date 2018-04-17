@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/src/main/webapp</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>true</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo></extraInfo>
+    <webPath>afzrms-qd-tj</webPath>
+    <webClassPathEntries>
+        <webClassPathEntry>/afzrms-qd-tj/src/main/webapp/WEB-INF/classes</webClassPathEntry>
+        <webClassPathEntry>/afzrms-qd-tj/target/test-classes</webClassPathEntry>
+    </webClassPathEntries>
+</tomcatProjectProperties>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/webroot</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>false</reloadable>
+    <redirectLogger>true</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo></extraInfo>
+    <webPath>gater</webPath>
+    <webClassPathEntries>
+        <webClassPathEntry>/gater-adaptor/build/classes</webClassPathEntry>
+        <webClassPathEntry>/gater1.2.1/WebRoot/WEB-INF/classes</webClassPathEntry>
+        <webClassPathEntry>org.eclipse.jst.j2ee.internal.module.container</webClassPathEntry>
+        <webClassPathEntry>org.eclipse.jst.j2ee.internal.web.container</webClassPathEntry>
+        <webClassPathEntry>org.eclipse.jst.j2ee.internal.web.container/gater1.2.1</webClassPathEntry>
+    </webClassPathEntries>
+</tomcatProjectProperties>

@@ -1,0 +1,91 @@
+.ol-popup {
+    display: none;
+    position: absolute;
+    background-color: white;
+    bottom: 12px;
+    left: -50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px #B7B6B6;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.infoWindow-top {
+    background: none repeat scroll 0 0 #F9F9F9;
+    border: 1px solid #B7B6B6;
+    position: relative;
+}
+.infoWindow-top div {
+    color: #333333;  
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 26px;
+    padding: 0 10px;
+}
+.ol-popup-content {
+    min-width: 170px;
+    max-height: 200px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.infoWindow-middle {
+    font-size: 12px;
+    line-height: 22px;
+    padding: 3px;
+    border-left: 1px solid #B7B6B6;
+    border-right: 1px solid #B7B6B6;
+}
+.ol-popup-closer {
+    position: absolute;
+    right: 2px;
+    font-size: 95%;
+    padding: 0 2px;
+    color: gray;
+    top:2px;
+    text-decoration: none;
+}
+
+.ol-popup-closer:after {
+    content: "\2716";
+}
+
+.ol-popup div.infoResult {
+    min-width: 130px;
+}
+
+.ol-popup div.infoResult p {
+    padding: 0.1em;
+    margin: 0;
+}
+
+.ol-popup-content h3 {
+    margin: 0.25em 0;
+}
+
+.ol-popup.marker {
+    margin-bottom: 30px;
+}

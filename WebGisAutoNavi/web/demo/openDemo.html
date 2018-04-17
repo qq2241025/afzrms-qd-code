@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Welcome To DBExplorer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="../css/ol.css"  type="text/css" rel="stylesheet" />
+	<link href="../css/ol3-popup.css"  type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../lib/openlayers/ol-debug.js"></script>
+	<script type="text/javascript" src="../lib/openlayers/ol3-popup.js"></script>
+	<script type="text/javascript" src="../js/GAS.js"></script>
+	<script type="text/javascript" src="data.js"></script>
+	<script type="text/javascript" src="openDemo.js"></script>
+	<style>
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.tooltip-static {
+  background-color: white;
+  color: black;
+  border: 1px solid white;
+}
+.tooltip-measure:before,
+.tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+</style>
+</head>
+<body  style="padding:0px;margin:0px;">
+<button onclick="addmarkerHandlet()">添加点</button>
+<button onclick="removePoint()">删除点</button>
+<button onclick="removeAllPoint()">删除所有点</button>
+<button onclick="setMarker()">添加点图标</button>
+<button onclick="hideMap()">隐藏地图</button>
+<button onclick="showMap()">显示地图</button>
+<button onclick="infoWindow()">信息窗口</button>
+<button onclick="clearMap()">清除地图</button>
+<button onclick="addMarkerText()">添加点Test</button>
+<button onclick="addPolyline()">添加线</button>
+<button onclick="removePolyline()">删除线</button>
+<button onclick="zoomIn()">放大</button>
+<button onclick="zoomOut()">缩小</button>
+<button onclick="addPolygon()">添加面</button>
+<button onclick="removePolygon()">删除面</button>
+<button onclick="isPointInBounds()">判断范围</button>
+<button onclick="pantTo()">居中</button>
+<button onclick="DrawPolygon()">DrawPolygon</button>
+<button onclick="DrawPolylineFitView()">折现居中</button>
+<button onclick="DrawPolygonFitView()">矩形居中</button>
+<button onclick="playTrack()">播放</button>
+<button onclick="NoresetMapRaroute()">不旋转</button>
+<button onclick="resetMapRaroute()">旋转</button>
+<button onclick="rectTools()">测距</button>
+<button onclick="resetMapRaroute()">侧面</button>
+<div id="iCenter" style=""width:500px;height:400px;"></div>
+</body>
+</html>

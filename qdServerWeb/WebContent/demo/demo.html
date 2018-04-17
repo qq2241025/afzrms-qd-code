@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>Welcome To DBExplorer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="../css/ol.css"  type="text/css" rel="stylesheet" />
+	<link href="../css/ol3-popup.css"  type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../lib/openlayers/ol-debug.js"></script>
+	<script type="text/javascript" src="../lib/openlayers/ol3-popup.js"></script>
+	<script type="text/javascript" src="../js/GAS.js"></script>
+</head>
+<body  style="padding:0px;margin:0px;">
+<button onclick="addmarkerHandlet()">添加点</button>
+<button onclick="setMarker()">添加点图标</button>
+<table cellpadding="0" cellspacing="0" style="width: 1200px;height: 300px;">
+	<tr>
+	   <td>旋转前</td><td>旋转后</td>
+	</tr>
+	<tr>
+  	   <td style="width:50%;height:100%;"><div id="mapA" style="width:100%;height:100%;"></div></td>
+  	   <td style="width:50%;height:100%;"><div id="mapB" style="width:100%;height:100%;"></div></td>
+	</tr>
+</table>
+<script type="text/javascript">
+     	 var map;
+		 var lnglat = [120.38262525,36.26008076];
+		 var point = ol.proj.transform(lnglat, 'EPSG:4326', 'EPSG:3857');
+	     var layer = new ol.layer.Tile({
+	          source: new ol.source.XYZ({
+		        url: "http://t4.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}"
+		      }),
+		      minZoom : 4
+		 });
+	     var addmarkerHandletA = function(){
+			  var lng= 116.38247 + Math.random() * 0.01;
+			  var lat= 36.26491 + Math.random() * 0.012;
+			  var GpsDirect = parseInt(Math.random()*360);
+			  var iconCfg = GAS.getGPSDirection(GpsDirect);
+			  var icon = "../images/gpscar/"+iconCfg["key"]+".png";
+			  var newpoint = ol.proj.transform([lng,lat], 'EPSG:4326', 'EPSG:3857');
+			  var imageDom = document.createElement("img");
+			  imageDom.setAttribute("src","../images/1.gif");
+			  var markerA = new ol.Overlay({
+				  position: newpoint,
+				  element: imageDom
+			 });
+			 mapA.addOverlay(markerA);
+			 mapA.getView().setCenter(markerA.getPosition());
+		}
+		 mapA = new ol.Map({
+		       target : "mapA",
+		       layers :[layer],
+		 	   view   : new ol.View({
+			     center: point,
+			     rotation: 120,
+			     zoom  : 15,
+			     minZoom : 4,
+			     maxZoom : 19
+			  })
+		 });
+		 addmarkerHandletA();
+		 var addmarkerHandletB = function(){
+			  var lng= 116.38247 + Math.random() * 0.01;
+			  var lat= 36.26491 + Math.random() * 0.012;
+			  var GpsDirect = parseInt(Math.random()*360);
+			  var iconCfg = GAS.getGPSDirection(GpsDirect);
+			  var icon = "../images/gpscar/"+iconCfg["key"]+".png";
+			  var newpoint = ol.proj.transform([lng,lat], 'EPSG:4326', 'EPSG:3857');
+			  var imageDom = document.createElement("img");
+			  imageDom.setAttribute("src","../images/1.gif");
+			  var markerB = new ol.Overlay({
+				  position: newpoint,
+				  element: imageDom
+			 });
+			  console.log(markerB,markerB.getRevision());
+			 mapB.addOverlay(markerB);
+			 mapB.getView().setCenter(markerB.getPosition());
+		}
+		mapB = new ol.Map({
+		       target : "mapB",
+		       layers : [layer],
+		 	   view   : new ol.View({
+			     center: point,
+			     zoom  : 15,
+			     minZoom : 4,
+			     maxZoom : 19
+			  })
+		 });
+		 addmarkerHandletB();
+</script>
+</body>
+</html>

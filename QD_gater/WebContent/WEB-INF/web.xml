@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>CommuniServer2.1</display-name>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>app1.root</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.properties</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>10000</param-value>
+	</context-param>
+	<listener>
+		<listener-class>
+			org.springframework.web.util.Log4jConfigListener
+		</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>StartServlet</servlet-name>
+		<servlet-class>
+			com.mapabc.gater.lbsgateway.service.StartServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>DealInstructionServlet</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.lbsgateway.service.DealInstructionServlet -->
+<!-- 		</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>TimerServlet</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.lbsgateway.service.TimerServlet -->
+<!-- 		</servlet-class> -->
+<!-- 		<load-on-startup>100</load-on-startup> -->
+<!-- 	</servlet> -->
+
+
+	<servlet>
+		<servlet-name>ServiceServlet</servlet-name>
+		<servlet-class>
+			com.mapabc.gater.directl.encode.ServiceServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServiceServlet</servlet-name>
+		<url-pattern>/service</url-pattern>
+	</servlet-mapping>
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>StartServlet</servlet-name> -->
+<!-- 		<url-pattern>/StartServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>DealInstructionServlet</servlet-name> -->
+<!-- 		<url-pattern>/servlet/DealInstructionServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>TimerServlet</servlet-name> -->
+<!-- 		<url-pattern>/servlet/TimerServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+
+<!-- 	<servlet> -->
+<!-- 		<description>receive schedule</description> -->
+<!-- 		<display-name>ScheduleServlet</display-name> -->
+<!-- 		<servlet-name>ScheduleServlet</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.schedule.ScheduleServlet -->
+<!-- 		</servlet-class> -->
+		<!--<load-on-startup>2</load-on-startup> -->
+<!-- 	</servlet> -->
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>ScheduleServlet</servlet-name> -->
+<!-- 		<url-pattern>/ScheduleServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<description></description> -->
+<!-- 		<display-name>HttpReceiveServer</display-name> -->
+<!-- 		<servlet-name>HttpReceiveServer</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.lbsgateway.gprsserver.http.HttpReceiveServer -->
+<!-- 		</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>parseThreadCount</param-name> -->
+<!-- 			<param-value>20</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>saveThreadCount</param-name> -->
+<!-- 			<param-value>20</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>HttpReceiveServer</servlet-name> -->
+<!-- 		<url-pattern>/moservice</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- 	<servlet> -->
+<!-- 		<description></description> -->
+<!-- 		<display-name>LbsCompenstateRequest</display-name> -->
+<!-- 		<servlet-name>LbsCompenstateRequest</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.lbs.LbsCompenstateRequest -->
+<!-- 		</servlet-class> -->
+<!-- 	</servlet> -->
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>LbsCompenstateRequest</servlet-name> -->
+<!-- 		<url-pattern>/lbsservice</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<description></description> -->
+<!-- 		<display-name>CounterServlet</display-name> -->
+<!-- 		<servlet-name>CounterServlet</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.counter.CounterServlet -->
+<!-- 		</servlet-class> -->
+
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>CounterServlet</servlet-name> -->
+<!-- 		<url-pattern>/CounterServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<description>alarmservice1.1</description> -->
+<!-- 		<display-name>AlarmServiceServlet</display-name> -->
+<!-- 		<servlet-name>AlarmServiceServlet</servlet-name> -->
+<!-- 		<servlet-class>com.mapabc.alarm.AlarmServlet</servlet-class> -->
+		<!-- <load-on-startup>0</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>AlarmServiceServlet</servlet-name> -->
+<!-- 		<url-pattern>/alarmservice</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<description>reloadterm</description> -->
+<!-- 		<display-name>ReloadTermInfo</display-name> -->
+<!-- 		<servlet-name>ReloadTermInfoServlet</servlet-name> -->
+<!-- 		<servlet-class> -->
+<!-- 			com.mapabc.gater.lbsgateway.service.ReloadTermInfoServlet -->
+<!-- 		</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>ReloadTermInfoServlet</servlet-name> -->
+<!-- 		<url-pattern>/reloadterminfo</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

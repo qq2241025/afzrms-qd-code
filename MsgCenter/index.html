@@ -1,0 +1,136 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <style type="text/css">
+    #messages { padding: 0px; list-style-type: none;}
+    #messages li { padding: 2px 0px; border-bottom: 1px solid #ccc; }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket;
+    var connected_userId;
+    // var ip = "10.17.131.13:8088";
+    var ip = "218.58.56.113:8088";
+    function connect(){
+      if(!socket){
+        // socket = io.connect();
+        socket = io.connect(ip);
+        socket.on('connect', function() {
+          connected_userId = $('#conn_userId').val();
+          var userInfo='{"userId":"'+connected_userId+'"}';
+          socket.emit('bind',userInfo);
+          $('#messages').append('<li>conntected,userId:'+connected_userId+'</li>');
+        });
+        socket.on('disconnect', function() {
+          $('#messages').append('<li>Disconnected,userId:'+connected_userId+'</li>');
+        });
+        socket.on('message', function(data,fn) {
+          var msg=JSON.parse(data);
+          var uuIds=[];
+          for(var i=0;i<msg.length;i++){
+            uuIds[i]=msg[i].uuId;
+            $('#messages').append('<li>'+'receive msg:'+msg[i].msgContent+'</li>');
+          }
+          var result = {userId:connected_userId,uuIds:uuIds};
+          socket.emit('clear',JSON.stringify(result));
+          //TODO
+          //fn(uuIds);
+        });
+      }else{
+        alert('already connected,userId:'+connected_userId);
+      }
+    }
+    function disconnect(){
+      if(socket){
+        socket.disconnect();
+        socket = null;
+        connected_userId = null;
+      }
+    }
+    function sendMsgToUser(){
+      var message='{"userId":"'+$('#userId').val()+'","msgType":"ORDER","msgContent":"'+$('#chatmsg').val()+'","msgTitle":"'+$('#chatmsg').val()+'","objectId":null,"property":"2","uuId":"ed0c3481-ca7b-42b3-9a25-656835a1a8ba'+$('#userId').val()+'"}';
+      socket.emit('sendMsgToUser',message,function(result){
+        if(result) {
+          $('#messages').append('<li>'+'sendMsgToUser result:'+result+'</li>');
+        }
+      });
+    }
+    function sendMsgToRoom(){
+      var message='{"userId":"'+$('#tag').val()+'","msgType":"ORDER","msgContent":"'+$('#tagmsg').val()+'","msgTitle":"'+$('#tagmsg').val()+'","objectId":null,"property":null,"uuId":"ed0c3481-ca7b-42b3-9a25-656835a1a8ba"}';
+      socket.emit('sendMsgToRoom',message,function(result){
+        if(result) {
+          $('#messages').append('<li>'+result+'</li>');
+        }
+      });
+    }
+    function sendMsgToRoomP2P(){
+      var message='{"userId":"'+$('#tagp2p').val()+'","msgType":"ORDER","msgContent":"'+$('#tagmsgp2p').val()+'","msgTitle":"'+$('#tagmsgp2p').val()+'","objectId":null,"property":null,"uuId":"ed0c3481-ca7b-42b3-9a25-656835a1a8ba"}';
+      socket.emit('sendMsgToRoomP2P',message,function(result){
+        if(result) {
+          $('#messages').append('<li>'+result+'</li>');
+        }
+      });
+    }
+    function sendMsgToAll(){
+      var message='{"userId":"ALL","msgType":"ORDER","msgContent":"'+$('#allmsg').val()+'","msgTitle":"'+$('#allmsg').val()+'","objectId":null,"property":null,"uuId":"ed0c3481-ca7b-42b3-9a25-656835a1a8ba"}';
+      socket.emit('sendMsgToAll',message,function(result){
+        if(result) {
+          $('#messages').append('<li>'+result+'</li>');
+        }
+      });
+    }
+    function sub(){
+      var tags=[];
+      tags[0]=$('#tag3').val();
+      var userId=connected_userId;
+      var msg = {userId:userId,tags:tags};
+      socket.emit('sub',JSON.stringify(msg),function(result){
+        if(result){
+          $('#messages').append('<li>'+result+'</li>');
+        }
+      });
+    }
+    function unsub(){
+      var tags=[];
+      tags[0]=$('#tag2').val();
+      var userId=connected_userId;
+      var msg = {userId:userId,tags:tags};
+      socket.emit('unsub',JSON.stringify(msg),function(result){
+        if(result){
+          $('#messages').append('<li>'+result+'</li>');
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+ <ul id="messages"></ul>
+ <hr>
+ UserId：<input type="text" id="conn_userId">
+ <input type="button" name="connect" value="登录" onClick="connect()">
+ <input type="button" name="disconnect" value="退出" onClick="disconnect()">
+ <br>
+ 消息内容：<input type="text" id="chatmsg"> 接收人UserId：<input type="text" id="userId" value="">
+ <input type="button" id="reg" name="Rgister User" value="点对点推送" onClick="sendMsgToUser()">
+ <br>
+  消息内容：<input type="text" id="tagmsg"> 标签：<input type="text" id="tag" value="44300001">
+ <input type="button" id="reg1" name="Rgister User1" value="房间推送" onClick="sendMsgToRoom()">
+
+ <br>
+ 消息内容：<input type="text" id="tagmsgp2p"> 标签：<input type="text" id="tagp2p" value="44300001">
+ <input type="button" id="reg2" name="Rgister User2" value="房间推送P2P" onClick="sendMsgToRoomP2P()">
+
+ <br>
+  消息内容：<input type="text" id="allmsg">
+ <input type="button" id="reg3" name="Rgister User3" value="全部推送" onClick="sendMsgToAll()">
+
+ <br>
+  订阅话题：<input type="text" id="tag3" value="44300001">
+ <input type="button" id="reg4" name="Rgister User4" value="订阅话题" onClick="sub()">
+
+ <br>
+  解除订阅：<input type="text" id="tag2" value="44300001">
+ <input type="button" id="reg4" name="Rgister User4" value="解除订阅" onClick="unsub()">
+</body>
+</html>

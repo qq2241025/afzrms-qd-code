@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<project default="main" basedir=".">
+
+	<property name="build" value="build/classes" />
+	<target name="main">
+		
+		<echo message="打包" />
+		
+		<delete file="gater-adaptor.jar" />
+		
+		<jar basedir="${build}" destfile="gater-adaptor.jar" excludes="config/,*.properties,*.xml,*.data">
+		 
+		</jar>
+	</target>
+</project>

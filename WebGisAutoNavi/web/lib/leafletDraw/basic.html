@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title>Leaflet.draw drawing and editing tools</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<link rel="stylesheet" href="../leaflet//leaflet.css" />
+	<link rel="stylesheet" href="leaflet.draw.css" />
+	<script src="../leaflet/leaflet-src.js"></script>
+	<script src="Leaflet.draw-src.js"></script>
+</head>
+<body>
+	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
+	<button id="changeColor">Rectangle -> Blue</button>
+	<script>
+		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
+			map = new L.Map('map', {layers: [osm], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
+
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+		L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a sexy polygon!';
+
+		var drawControl = new L.Control.Draw({
+			position: 'topright',
+			draw: {
+				polyline: {
+					metric: true
+				},
+				polygon: {
+					showArea: true,
+					shapeOptions: {
+						color: 'green'
+					}
+				},
+				circle: {
+					shapeOptions: {
+						color: '#662d91'
+					}
+				},
+				marker: false
+			},
+			edit: {
+				featureGroup: drawnItems,
+				remove: false
+			}
+		});
+		map.addControl(drawControl);
+
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
+
+			if (type === 'marker') {
+				layer.bindPopup('A popup!');
+			}
+
+			drawnItems.addLayer(layer);
+		});
+
+		map.on('draw:edited', function (e) {
+			var layers = e.layers;
+			var countOfEditedLayers = 0;
+			layers.eachLayer(function(layer) {
+				countOfEditedLayers++;
+			});
+			console.log("Edited " + countOfEditedLayers + " layers");
+		});
+
+		L.DomUtil.get('changeColor').onclick = function () {
+			drawControl.setDrawingOptions({ rectangle: { shapeOptions: { color: '#004a80' } } });
+		};
+
+	</script>
+</body>
+</html>

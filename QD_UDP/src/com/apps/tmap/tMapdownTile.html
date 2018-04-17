@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>天地图－地图API－范例－矩形工具</title> 
+<script type="text/javascript" src="http://api.tianditu.com/js/maps.js"></script> 
+<script type="text/javascript" type="text/javascript"> 
+  	var map,zoom=12,rect,rectTool; 
+   	function onLoad() 
+	{ 
+		//初始化地图对象 
+	   	map=new TMap("mapDiv"); 
+	   	//设置显示地图的中心点和级别 
+		map.centerAndZoom(new TLngLat(116.40969,39.94940),zoom); 
+		//允许鼠标滚轮放大地图 
+		map.enableHandleMouseScroll(); 
+		var config = { 
+			strokeColor:"#000000",	//折线颜色 
+			fillColor:"#FFFFFF",	//填充颜色。当参数为空时，折线覆盖物将没有填充效果 
+			strokeWeight:"2px",	//折线的宽度，以像素为单位 
+			opacity:0.5,	//折线的透明度，取值范围0 - 1 
+			strokeStyle:"solid"	//折线的样式，solid或dashed 
+		}; 
+		//创建矩形工具对象 
+		rectTool = new TRectTool(map,config); 
+		//注册矩形工具绘制完成后的事件 
+        TEvent.addListener(rectTool,"draw",onDrawRect); 
+   	} 
+   	 
+   	function onDrawRect(bounds) 
+   	{ 
+        rect = new TRect(bounds); 
+        map.addOverLay(rect); 
+		//关闭矩形工具体 
+		rectTool.close(); 
+    } 
+</script> 
+</head> 
+<body onLoad="onLoad()"> 
+	<div id="mapDiv" style="position:absolute;width:600px; height:500px"></div> 
+	<div style="position:absolute;left:620px;"> 
+		<input type="button" value="开启" onClick="rectTool.open();"/> 
+		<input type="button" value="关闭" onClick="rectTool.close();"/> 
+		<ul> 
+			<li>本示例演示如何在地图上用鼠标画矩形。</li> 
+			<p><a href="http://api.tianditu.com/api-new/examples.html">返回所有范例列表</a></p> 
+		</ul> 
+	</div> 
+</body> 
+</html>
